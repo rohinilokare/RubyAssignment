@@ -17,9 +17,9 @@
 
 # Solution------
 def sum(*rest)
-    puts rest.join(',')
-    puts rest.reduce { |a, b| a + b }
-    puts '--------'
+  puts rest.join(',')
+  puts rest.reduce { |a, b| a + b }
+  puts '--------'
 end
 
 sum(2,3)
