@@ -2,7 +2,6 @@ class User
   attr_accessor :status
 
   def active?
-    puts 'hello in active'
     self.status == "active"
   end
 
@@ -16,4 +15,11 @@ class User
 end
 
 user = User.new()
-user.active?
+user.status = "active"
+puts "active user #{user.active?}"
+puts "Inactive user #{user.inactive?}"
+puts "pending user #{user.pending?}"
+
+user.status = "pending"
+puts "pending user #{user.pending?}"
+puts "active user #{user.active?}"
