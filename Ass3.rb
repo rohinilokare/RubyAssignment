@@ -1,5 +1,7 @@
 class Tournament
-  def status(Team1,team2,result)
+   team = Array.new(4){Array.new(5,0)}
+   puts team
+  def status(team1,team2,result)
     if(result=="win")
       team[team1]["W"]= team[team1]["W"] + 1
       team[team1]["MP"] = team[team1]["MP"] + 1
@@ -19,16 +21,18 @@ class Tournament
       team[team2]["MP"] = team[team2]["MP"] + 1
       team[team2]["P"] = team[team2]["P"] + 3
     end
+
+    return team
   end
 end
 
 t = Tournament.new() 
-t.name(Team B;Team C;win)
-t.name(Team A;Team D;draw)
-t.name(Team A;Team B;win)
-t.name(Team D;Team C;loss)
-t.name(Team C;Team A;loss)
-t.name(Team B;Team D;win)
+t.status('Team B','Team C','win')
+t.status('Team A','Team D','draw')
+t.status('Team A','Team B','win')
+t.status('Team D','Team C','loss')
+t.status('Team C','Team A','loss')
+t.status('Team B','Team D','win')
 
 
 
