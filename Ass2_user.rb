@@ -1,12 +1,8 @@
 class User
-  # include Mongoid::Document
-  # include Mongoid::Timestamps
-  # include Mongoid::Multitenancy::Document
-
-  # field :status, type: String, default: ""
+  attr_accessor :status
 
   def active?
-    puts self.status
+    puts 'hello in active'
     self.status == "active"
   end
 
@@ -19,3 +15,5 @@ class User
   end
 end
 
+user = User.new()
+user.active?
