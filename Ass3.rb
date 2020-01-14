@@ -1,41 +1,122 @@
 class Tournament
-  # Array.new(row){Array.new(col,default_value)} // initialization
-   @team = Array.new(4){Array.new(5,0)}
-   puts @team
+  attr_accessor :point_table
+
+  @@point_table = Hash.new
+  def accept_record(record)
+    array = record.split(';')
+    status(array[0],array[1],array[2])
+  end
+
   def status(team1,team2,result)
-    if(result=="win")
-      @team[team1]["W"]= @team[team1]["W"] + 1
-      @team[team1]["MP"] = @team[team1]["MP"] + 1
-      @team[team2]["MP"] = @team[team2]["MP"] + 1
-      @team[team1]["P"] = @team[team1]["P"] + 3
-    elsif(result=="draw")
-      @team[team1]["D"]= @team[team1]["D"] + 1
-      @team[team2]["D"]= @team[team2]["D"] + 1
-      @team[team1]["MP"] = @team[team1]["MP"] + 1
-      @team[team2]["MP"] = @team[team2]["MP"] + 1
-      @team[team1]["P"] = @team[team1]["P"] + 1
-      @team[team2]["P"] = @team[team2]["P"] + 1
-    elsif(result=="loss")
-      @team[team1]["L"]= @team[team1]["L"] + 1
-      @team[team2]["W"]= @team[team2]["W"] + 1
-      @team[team1]["MP"] = @team[team1]["MP"] + 1
-      @team[team2]["MP"] = @team[team2]["MP"] + 1
-      @team[team2]["P"] = @team[team2]["P"] + 3
+    if (result.downcase == 'win') 
+      win(team1,team2,result)
     end
 
-    return @team
+    if (result.downcase == 'draw')
+      draw(team1,team2,result)
+    end
+
+    if (result.downcase == 'loss') 
+      loss(team1,team2,result)
+    end  
+    
+  end
+
+  def win(team1,team2,result)
+    if(@@point_table.key?(team1))
+      @@point_table["team1"]["MP"]=@@point_table["team1"]["MP"] + 1
+      @@point_table["team1"]["W"]=@@point_table["team1"]["W"] + 1
+      @@point_table["team1"]["P"]=@@point_table["team1"]["P"] + 3
+    else
+      @@point_table["team1"]=Hash.new
+      @@point_table["team1"]["MP"]= 1
+      @@point_table["team1"]["W"]= 1
+      @@point_table["team1"]["P"]= 3
+      @@point_table["team1"]["D"]= 0
+      @@point_table["team1"]["L"]= 0
+    end
+
+    if(@@point_table.key?(team2))
+      @@point_table["team2"]["MP"] = @@point_table["team1"]["MP"] + 1
+      @@point_table["team2"]["L"] = @@point_table["team1"]["L"] + 1
+    else
+      @@point_table["team2"]=Hash.new
+      @@point_table["team2"]["MP"]= 1
+      @@point_table["team2"]["L"]= 1
+      @@point_table["team2"]["W"]= 0
+      @@point_table["team2"]["D"]= 0
+      @@point_table["team2"]["P"]= 0
+    end
+    puts "in win def #{@@point_table}"
+  end
+
+  def draw(team1,team2,result)
+    if(@@point_table.key?(team1))
+      @@point_table["team1"]["MP"]=@@point_table["team1"]["MP"] + 1
+      @@point_table["team1"]["P"]=@@point_table["team1"]["P"] + 1
+    else
+      @@point_table["team1"]=Hash.new
+      @@point_table["team1"]["MP"]= 1
+      @@point_table["team1"]["W"]= 0
+      @@point_table["team1"]["P"]= 1
+      @@point_table["team1"]["D"]= 1
+      @@point_table["team1"]["L"]= 0
+    end
+    
+    if(@@point_table.key?(team2))
+      @@point_table["team2"]["MP"]=@@point_table["team2"]["MP"] + 1
+      @@point_table["team2"]["D"]=@@point_table["team2"]["D"] + 1
+    else
+      @@point_table["team2"]=Hash.new
+      @@point_table["team2"]["MP"]= 1
+      @@point_table["team2"]["L"]= 0
+      @@point_table["team2"]["W"]= 0
+      @@point_table["team2"]["D"]= 1
+      @@point_table["team2"]["P"]= 1
+    end
+  end
+
+  def loss(team1,team2,result)
+    if(@@point_table.key?(team1))
+      @@point_table["team1"]["MP"]=@@point_table["team1"]["MP"] + 1
+      @@point_table["team1"]["L"]=@@point_table["team1"]["L"] + 1
+    else
+      @@point_table["team1"]=Hash.new
+      @@point_table["team1"]["MP"]= 1
+      @@point_table["team1"]["W"]= 0
+      @@point_table["team1"]["P"]= 0
+      @@point_table["team1"]["D"]= 0
+      @@point_table["team1"]["L"]= 1
+    end
+
+    if(@@point_table.key?(team2))
+      @@point_table["team2"]["MP"]=@@point_table["team2"]["MP"] + 1
+      @@point_table["team2"]["W"]=@@point_table["team2"]["W"] + 1
+      @@point_table["team2"]["P"]=@@point_table["team2"]["P"] + 3
+    else
+      @@point_table["team2"]=Hash.new
+      @@point_table["team2"]["MP"]= 1
+      @@point_table["team2"]["L"]= 0
+      @@point_table["team2"]["W"]= 1
+      @@point_table["team2"]["D"]= 0
+      @@point_table["team2"]["P"]= 3
+    end
   end
 end
 
 t = Tournament.new() 
-t.status('Team B','Team C','win')
-t.status('Team A','Team D','draw')
-t.status('Team A','Team B','win')
-t.status('Team D','Team C','loss')
-t.status('Team C','Team A','loss')
-t.status('Team B','Team D','win')
+puts 'how many record do you want to add?'
+record_no = gets
+record_no = record_no.to_i
 
+while record_no > 0
+  puts 'please enter record'
+  record = gets
+  t.accept_record(record)
+  record_no = record_no -1
+end
 
+puts t.point_table
 
 
 
