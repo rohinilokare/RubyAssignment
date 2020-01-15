@@ -8,15 +8,15 @@ class Tournament
   end
 
   def status(team1,team2,result)
-    if (result.downcase == 'win') 
+    if result.chomp.eql? 'win'
       win(team1,team2,result)
     end
 
-    if (result.downcase == 'draw')
+    if result.chomp.eql?'draw'
       draw(team1,team2,result)
     end
 
-    if (result.downcase == 'loss') 
+    if result.chomp.eql? 'loss'
       loss(team1,team2,result)
     end  
     
@@ -24,84 +24,90 @@ class Tournament
 
   def win(team1,team2,result)
     if(@@point_table.key?(team1))
-      @@point_table["team1"]["MP"]=@@point_table["team1"]["MP"] + 1
-      @@point_table["team1"]["W"]=@@point_table["team1"]["W"] + 1
-      @@point_table["team1"]["P"]=@@point_table["team1"]["P"] + 3
+      @@point_table[team1]["MP"]=@@point_table[team1]["MP"] + 1
+      @@point_table[team1]["W"]=@@point_table[team1]["W"] + 1
+      @@point_table[team1]["P"]=@@point_table[team1]["P"] + 3
     else
-      @@point_table["team1"]=Hash.new
-      @@point_table["team1"]["MP"]= 1
-      @@point_table["team1"]["W"]= 1
-      @@point_table["team1"]["P"]= 3
-      @@point_table["team1"]["D"]= 0
-      @@point_table["team1"]["L"]= 0
+      @@point_table[team1]=Hash.new
+      @@point_table[team1]["MP"]= 1
+      @@point_table[team1]["W"]= 1
+      @@point_table[team1]["P"]= 3
+      @@point_table[team1]["D"]= 0
+      @@point_table[team1]["L"]= 0
     end
 
     if(@@point_table.key?(team2))
-      @@point_table["team2"]["MP"] = @@point_table["team1"]["MP"] + 1
-      @@point_table["team2"]["L"] = @@point_table["team1"]["L"] + 1
+      @@point_table[team2]["MP"] = @@point_table[team1]["MP"] + 1
+      @@point_table[team2]["L"] = @@point_table[team1]["L"] + 1
     else
-      @@point_table["team2"]=Hash.new
-      @@point_table["team2"]["MP"]= 1
-      @@point_table["team2"]["L"]= 1
-      @@point_table["team2"]["W"]= 0
-      @@point_table["team2"]["D"]= 0
-      @@point_table["team2"]["P"]= 0
+      @@point_table[team2]=Hash.new
+      @@point_table[team2]["MP"]= 1
+      @@point_table[team2]["L"]= 1
+      @@point_table[team2]["W"]= 0
+      @@point_table[team2]["D"]= 0
+      @@point_table[team2]["P"]= 0
     end
-    puts "in win def #{@@point_table}"
   end
 
   def draw(team1,team2,result)
     if(@@point_table.key?(team1))
-      @@point_table["team1"]["MP"]=@@point_table["team1"]["MP"] + 1
-      @@point_table["team1"]["P"]=@@point_table["team1"]["P"] + 1
+      @@point_table[team1]["MP"]=@@point_table[team1]["MP"] + 1
+      @@point_table[team1]["P"]=@@point_table[team1]["P"] + 1
     else
-      @@point_table["team1"]=Hash.new
-      @@point_table["team1"]["MP"]= 1
-      @@point_table["team1"]["W"]= 0
-      @@point_table["team1"]["P"]= 1
-      @@point_table["team1"]["D"]= 1
-      @@point_table["team1"]["L"]= 0
+      @@point_table[team1]=Hash.new
+      @@point_table[team1]["MP"]= 1
+      @@point_table[team1]["W"]= 0
+      @@point_table[team1]["P"]= 1
+      @@point_table[team1]["D"]= 1
+      @@point_table[team1]["L"]= 0
     end
     
     if(@@point_table.key?(team2))
-      @@point_table["team2"]["MP"]=@@point_table["team2"]["MP"] + 1
-      @@point_table["team2"]["D"]=@@point_table["team2"]["D"] + 1
+      @@point_table[team2]["MP"]=@@point_table[team2]["MP"] + 1
+      @@point_table[team2]["D"]=@@point_table[team2]["D"] + 1
     else
-      @@point_table["team2"]=Hash.new
-      @@point_table["team2"]["MP"]= 1
-      @@point_table["team2"]["L"]= 0
-      @@point_table["team2"]["W"]= 0
-      @@point_table["team2"]["D"]= 1
-      @@point_table["team2"]["P"]= 1
+      @@point_table[team2]=Hash.new
+      @@point_table[team2]["MP"]= 1
+      @@point_table[team2]["L"]= 0
+      @@point_table[team2]["W"]= 0
+      @@point_table[team2]["D"]= 1
+      @@point_table[team2]["P"]= 1
     end
+
   end
 
-  def loss(team1,team2,result)
+  def loss(team1team2result)
     if(@@point_table.key?(team1))
-      @@point_table["team1"]["MP"]=@@point_table["team1"]["MP"] + 1
-      @@point_table["team1"]["L"]=@@point_table["team1"]["L"] + 1
+      @@point_table[team1]["MP"]=@@point_table[team1]["MP"] + 1
+      @@point_table[team1]["L"]=@@point_table[team1]["L"] + 1
     else
-      @@point_table["team1"]=Hash.new
-      @@point_table["team1"]["MP"]= 1
-      @@point_table["team1"]["W"]= 0
-      @@point_table["team1"]["P"]= 0
-      @@point_table["team1"]["D"]= 0
-      @@point_table["team1"]["L"]= 1
+      @@point_table[team1]=Hash.new
+      @@point_table[team1]["MP"]= 1
+      @@point_table[team1]["W"]= 0
+      @@point_table[team1]["P"]= 0
+      @@point_table[team1]["D"]= 0
+      @@point_table[team1]["L"]= 1
     end
 
     if(@@point_table.key?(team2))
-      @@point_table["team2"]["MP"]=@@point_table["team2"]["MP"] + 1
-      @@point_table["team2"]["W"]=@@point_table["team2"]["W"] + 1
-      @@point_table["team2"]["P"]=@@point_table["team2"]["P"] + 3
+      @@point_table[team2]["MP"]=@@point_table[team2]["MP"] + 1
+      @@point_table[team2]["W"]=@@point_table[team2]["W"] + 1
+      @@point_table[team2]["P"]=@@point_table[team2]["P"] + 3
     else
-      @@point_table["team2"]=Hash.new
-      @@point_table["team2"]["MP"]= 1
-      @@point_table["team2"]["L"]= 0
-      @@point_table["team2"]["W"]= 1
-      @@point_table["team2"]["D"]= 0
-      @@point_table["team2"]["P"]= 3
+      @@point_table[team2]=Hash.new
+      @@point_table[team2]["MP"]= 1
+      @@point_table[team2]["L"]= 0
+      @@point_table[team2]["W"]= 1
+      @@point_table[team2]["D"]= 0
+      @@point_table[team2]["P"]= 3
     end
   end
+
+  def final_table
+    puts '-------Point Table----------'
+    puts @@point_table
+  end
+
 end
 
 t = Tournament.new() 
@@ -116,7 +122,7 @@ while record_no > 0
   record_no = record_no -1
 end
 
-puts t.point_table
+t.final_table
 
 
 
