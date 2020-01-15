@@ -53,6 +53,7 @@ class Tournament
     if(@@point_table.key?(team1))
       @@point_table[team1]["MP"]=@@point_table[team1]["MP"] + 1
       @@point_table[team1]["P"]=@@point_table[team1]["P"] + 1
+      @@point_table[team1]["D"]=@@point_table[team1]["D"] + 1
     else
       @@point_table[team1]=Hash.new
       @@point_table[team1]["MP"]= 1
@@ -64,6 +65,7 @@ class Tournament
     
     if(@@point_table.key?(team2))
       @@point_table[team2]["MP"]=@@point_table[team2]["MP"] + 1
+      @@point_table[team2]["P"]=@@point_table[team2]["P"] + 1
       @@point_table[team2]["D"]=@@point_table[team2]["D"] + 1
     else
       @@point_table[team2]=Hash.new
@@ -76,7 +78,7 @@ class Tournament
 
   end
 
-  def loss(team1team2result)
+  def loss(team1,team2,result)
     if(@@point_table.key?(team1))
       @@point_table[team1]["MP"]=@@point_table[team1]["MP"] + 1
       @@point_table[team1]["L"]=@@point_table[team1]["L"] + 1
@@ -124,6 +126,24 @@ end
 
 t.final_table
 
-
-
- 
+# --------------OUTPUT---
+# how many record do you want to add?
+#   6
+#   please enter record
+#   Team B;Team C;win
+#   please enter record
+#   Team A;Team D;draw
+#   please enter record
+#   Team A;Team B;win
+#   please enter record
+#   Team D;Team C;loss
+#   please enter record
+#   Team C;Team A;loss
+#   please enter record
+#   Team B;Team D;win
+#   -------Point Table----------
+#   {"Team B"=>{"MP"=>4, "W"=>2, "P"=>6, "D"=>0, "L"=>1},
+    #  "Team C"=>{"MP"=>3, "L"=>2, "W"=>1, "D"=>0, "P"=>3}, 
+    #  "Team A"=>{"MP"=>3, "W"=>2, "P"=>7, "D"=>1, "L"=>0}, 
+    #  "Team D"=>{"MP"=>5, "L"=>2, "W"=>0, "D"=>1, "P"=>1}}
+  
